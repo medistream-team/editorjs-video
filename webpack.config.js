@@ -26,7 +26,7 @@ module.exports = (env, argv) => {
   const webpack = require('webpack');
 
   return {
-    entry: ['./src/index.js'],
+    entry: [ './src/index.js' ],
     module: {
       rules: [
         {
@@ -36,7 +36,7 @@ module.exports = (env, argv) => {
             {
               loader: 'babel-loader',
               query: {
-                presets: ['@babel/preset-env'],
+                presets: [ '@babel/preset-env' ],
               },
             },
             'eslint-loader',
@@ -79,7 +79,7 @@ module.exports = (env, argv) => {
       path: path.join(__dirname, '/dist'),
       publicPath: '/',
       filename: 'bundle.js',
-      library: 'ImageTool',
+      library: 'VideoTool',
       libraryTarget: 'umd',
       libraryExport: 'default',
     },

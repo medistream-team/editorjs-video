@@ -1,4 +1,4 @@
-import { IconPicture } from '@codexteam/icons';
+import { IconPlay } from '@codexteam/icons';
 import { make } from './utils/dom';
 
 /**
@@ -111,7 +111,7 @@ export default class Ui {
   createFileButton() {
     const button = make('div', [ this.CSS.button ]);
 
-    button.innerHTML = this.config.buttonContent || `${IconPicture} ${this.api.i18n.t('Select an Image')}`;
+    button.innerHTML = this.config.buttonContent || `${IconPlay} ${this.api.i18n.t('Select an Video')}`;
 
     button.addEventListener('click', () => {
       this.onSelectFile();
@@ -152,7 +152,8 @@ export default class Ui {
     /**
      * Check for a source extension to compose element correctly: video tag for mp4, img — for others
      */
-    const tag = /\.mp4$/.test(url) ? 'VIDEO' : 'IMG';
+    // const tag = /\.mp4$/.test(url) ? 'VIDEO' : 'IMG';
+    const tag = 'VIDEO';
 
     const attributes = {
       src: url,
@@ -176,10 +177,13 @@ export default class Ui {
        *
        * @type {boolean}
        */
-      attributes.autoplay = true;
-      attributes.loop = true;
-      attributes.muted = true;
-      attributes.playsinline = true;
+      // attributes.autoplay = true;
+      // attributes.loop = true;
+      // attributes.muted = true;
+      // attributes.playsinline = true;
+
+      attributes.controls = true;
+      attributes.controlsList = 'nodownload';
 
       /**
        * Change event to be listened
@@ -250,4 +254,3 @@ export default class Ui {
     this.nodes.wrapper.classList.toggle(`${this.CSS.wrapper}--${tuneName}`, status);
   }
 }
-

@@ -20,7 +20,7 @@
  * It will expose 8008 port, so you can pass http://localhost:8008 with the Tools config:
  *
  * image: {
- *   class: ImageTool,
+ *   class: VideoTool,
  *   config: {
  *     endpoints: {
  *       byFile: 'http://localhost:8008/uploadFile',
@@ -31,7 +31,7 @@
  */
 
 /**
- * @typedef {object} ImageToolData
+ * @typedef {object} VideoToolData
  * @description Image Tool's input and output data format
  * @property {string} caption — image caption
  * @property {boolean} withBorder - should image be rendered with border
@@ -46,7 +46,7 @@ import './index.css';
 import Ui from './ui';
 import Uploader from './uploader';
 
-import { IconAddBorder, IconStretch, IconAddBackground, IconPicture } from '@codexteam/icons';
+import { IconAddBorder, IconStretch, IconAddBackground, IconPlay } from '@codexteam/icons';
 
 /**
  * @typedef {object} ImageConfig
@@ -74,7 +74,7 @@ import { IconAddBorder, IconStretch, IconAddBackground, IconPicture } from '@cod
  *                           also can contain any additional data that will be saved and passed back
  * @property {string} file.url - [Required] image source URL
  */
-export default class ImageTool {
+export default class VideoTool {
   /**
    * Notify core that read-only mode is supported
    *
@@ -93,8 +93,8 @@ export default class ImageTool {
    */
   static get toolbox() {
     return {
-      icon: IconPicture,
-      title: 'Image',
+      icon: IconPlay,
+      title: 'Video',
     };
   }
 
@@ -128,7 +128,7 @@ export default class ImageTool {
 
   /**
    * @param {object} tool - tool properties got from editor.js
-   * @param {ImageToolData} tool.data - previously saved data
+   * @param {VideoToolData} tool.data - previously saved data
    * @param {ImageConfig} tool.config - user config for Tool
    * @param {object} tool.api - Editor.js API
    * @param {boolean} tool.readOnly - read-only mode flag
@@ -145,7 +145,7 @@ export default class ImageTool {
       additionalRequestData: config.additionalRequestData || {},
       additionalRequestHeaders: config.additionalRequestHeaders || {},
       field: config.field || 'image',
-      types: config.types || 'image/*',
+      types: config.types || 'video/*',
       captionPlaceholder: this.api.i18n.t(config.captionPlaceholder || 'Caption'),
       buttonContent: config.buttonContent || '',
       uploader: config.uploader || undefined,
@@ -198,7 +198,7 @@ export default class ImageTool {
   /**
    * Validate data: check if Image exists
    *
-   * @param {ImageToolData} savedData — data received after saving
+   * @param {VideoToolData} savedData — data received after saving
    * @returns {boolean} false if saved data is not correct, otherwise true
    * @public
    */
@@ -211,7 +211,7 @@ export default class ImageTool {
    *
    * @public
    *
-   * @returns {ImageToolData}
+   * @returns {VideoToolData}
    */
   save() {
     const caption = this.ui.nodes.caption;
@@ -231,7 +231,7 @@ export default class ImageTool {
   renderSettings() {
     // Merge default tunes with the ones that might be added by user
     // @see https://github.com/editor-js/image/pull/49
-    const tunes = ImageTool.tunes.concat(this.config.actions);
+    const tunes = VideoTool.tunes.concat(this.config.actions);
 
     return tunes.map(tune => ({
       icon: tune.icon,
@@ -274,7 +274,7 @@ export default class ImageTool {
        */
       tags: [
         {
-          img: { src: true },
+          video: { src: true },
         },
       ],
       /**
@@ -288,7 +288,7 @@ export default class ImageTool {
        * Drag n drop file from into the Editor
        */
       files: {
-        mimeTypes: [ 'image/*' ],
+        mimeTypes: [ 'video/*' ],
       },
     };
   }
@@ -344,7 +344,7 @@ export default class ImageTool {
    *
    * @private
    *
-   * @param {ImageToolData} data - data in Image Tool format
+   * @param {VideoToolData} data - data in Image Tool format
    */
   set data(data) {
     this.image = data.file;
@@ -352,7 +352,7 @@ export default class ImageTool {
     this._data.caption = data.caption || '';
     this.ui.fillCaption(this._data.caption);
 
-    ImageTool.tunes.forEach(({ name: tune }) => {
+    VideoTool.tunes.forEach(({ name: tune }) => {
       const value = typeof data[tune] !== 'undefined' ? data[tune] === true || data[tune] === 'true' : false;
 
       this.setTune(tune, value);
@@ -364,7 +364,7 @@ export default class ImageTool {
    *
    * @private
    *
-   * @returns {ImageToolData}
+   * @returns {VideoToolData}
    */
   get data() {
     return this._data;
