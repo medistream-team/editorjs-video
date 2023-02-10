@@ -66,6 +66,7 @@ export default class Ui {
       wrapper: 'video-tool',
       videoContainer: 'video-tool__video',
       videoPreloader: 'video-tool__video-preloader',
+      videoBackground: 'video-tool__video-background',
       videoEl: 'video-tool__video-picture',
       caption: 'video-tool__caption',
     };
@@ -152,7 +153,6 @@ export default class Ui {
     /**
      * Check for a source extension to compose element correctly: video tag for mp4, img — for others
      */
-    // const tag = /\.mp4$/.test(url) ? 'VIDEO' : 'IMG';
     const tag = 'VIDEO';
 
     const attributes = {
@@ -177,10 +177,6 @@ export default class Ui {
        *
        * @type {boolean}
        */
-      // attributes.autoplay = true;
-      // attributes.loop = true;
-      // attributes.muted = true;
-      // attributes.playsinline = true;
 
       attributes.controls = true;
       attributes.controlsList = 'nodownload';
@@ -211,6 +207,7 @@ export default class Ui {
        */
       if (this.nodes.videoPreloader) {
         this.nodes.videoPreloader.style.backgroundImage = '';
+        this.nodes.videoContainer.classList.add(this.CSS.videoBackground);
       }
     });
 
